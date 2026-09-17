@@ -1,3 +1,4 @@
+import { createPageHead } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Check } from "lucide-react";
 import { PosoPosPreview } from "@/components/PosoPosPreview";
@@ -25,7 +26,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:description", content: description },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://poso-style-launchpad.lovable.app/" }],
+    links: [{ rel: "canonical", href: "https://poso.vn" }],
   }),
   component: AdsLanding,
 });
@@ -94,9 +95,9 @@ function AdsLanding() {
       <main id="noi-dung">
         <section aria-labelledby="intro-title" className="ads-original-hero ads-container">
           <div className="ads-original-copy ads-enter">
-            <p className="ads-eyebrow">
+            {/* <p className="ads-eyebrow">
               <span aria-hidden="true" /> POSO · BÁN HÀNG TINH GỌN
-            </p>
+            </p> */}
             <h1 id="intro-title">
               Bán hàng thời trang.
               <br />

@@ -1,3 +1,4 @@
+import { createPageHead } from "@/lib/seo";
 import { PosoLogo } from "@/components/PosoLogo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
@@ -8,27 +9,13 @@ import ownerReport from "@/assets/poso-owner-report.jpg";
 import caseStore from "@/assets/poso-case-store.jpg";
 
 export const Route = createFileRoute("/gioi-thieu")({
-  head: () => ({
-    meta: [
-      { title: "Giới thiệu POSO — Quản lý size, màu, SKU và tồn kho" },
-      {
-        name: "description",
-        content:
-          "Hướng dẫn từng bước cách POSO giúp shop thời trang tạo sản phẩm, gắn size và màu, sinh mã SKU, nhập kho, bán hàng và kiểm kho chính xác.",
-      },
-      {
-        property: "og:title",
-        content: "Giới thiệu POSO — Quản lý size, màu, SKU và tồn kho",
-      },
-      {
-        property: "og:description",
-        content:
-          "Sáu bước cụ thể để shop thời trang chuẩn hoá sản phẩm, mã SKU và tồn kho với POSO.",
-      },
-      { property: "og:type", content: "article" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    createPageHead({
+      path: "/gioi-thieu",
+      title: "Giới thiệu POSO — Quản lý size, màu, SKU và tồn kho",
+      description:
+        "Hướng dẫn từng bước cách POSO giúp shop thời trang tạo sản phẩm, gắn size và màu, sinh mã SKU, nhập kho, bán hàng và kiểm kho chính xác.",
+    }),
   component: GioiThieu,
 });
 
@@ -44,7 +31,7 @@ const steps = [
       "Tất cả biến thể sau này đều nằm dưới sản phẩm gốc này, nên báo cáo doanh thu theo mẫu luôn gọn và dễ đọc.",
     ],
     image: sellerHero,
-    alt: "Chủ shop thời trang tạo sản phẩm mới trên POSO",
+    alt: "Chủ shop thời trang cầm điện thoại hiển thị báo cáo doanh thu tại quầy",
   },
   {
     no: "02",
@@ -55,7 +42,7 @@ const steps = [
       "Nếu một màu chỉ có vài size, bạn tắt các ô không bán — kho sẽ không bao giờ hiện những biến thể không tồn tại.",
     ],
     image: staffInventory,
-    alt: "Nhân viên shop kiểm size và màu trên kệ hàng",
+    alt: "Hai nhân viên shop thời trang kiểm tra nhãn quần áo và đối chiếu trên điện thoại",
   },
   {
     no: "03",
@@ -66,7 +53,7 @@ const steps = [
       "Mỗi mã gắn với một mã vạch để quét tại quầy. Không trùng mã, không nhầm biến thể khi hai nhân viên cùng nhập hàng.",
     ],
     image: caseStore,
-    alt: "Quầy thu ngân shop thời trang với máy quét mã SKU",
+    alt: "Nhân viên đón khách trước cửa hàng thời trang Lụa",
   },
   {
     no: "04",
@@ -77,7 +64,7 @@ const steps = [
       "Có nhiều chi nhánh hoặc kho phụ thì mỗi nơi có tồn riêng, tổng vẫn xem được ở một màn hình.",
     ],
     image: staffInventory,
-    alt: "Nhân viên nhập hàng vào kho theo từng size và màu",
+    alt: "Nhân viên kiểm tra nhãn sản phẩm trên chồng quần áo tại quầy",
   },
   {
     no: "05",
@@ -88,7 +75,7 @@ const steps = [
       "Bán online, livestream hay tại cửa hàng đều trừ chung một kho, nên không còn cảnh chốt đơn rồi báo khách hết hàng.",
     ],
     image: sellerHero,
-    alt: "Người bán chốt đơn hàng thời trang trên POSO",
+    alt: "Chủ shop giới thiệu màn hình báo cáo doanh thu trên điện thoại",
   },
   {
     no: "06",
@@ -99,7 +86,7 @@ const steps = [
       "Báo cáo cho biết size M bán gấp ba size XL, màu đen chiếm 48% doanh thu — đủ cơ sở để quyết định đơn nhập kế tiếp.",
     ],
     image: ownerReport,
-    alt: "Chủ shop xem báo cáo tồn kho và doanh thu của POSO",
+    alt: "Chủ shop thời trang xem biểu đồ doanh thu trên máy tính bảng",
   },
 ];
 

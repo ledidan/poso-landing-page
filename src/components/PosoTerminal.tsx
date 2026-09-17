@@ -66,7 +66,7 @@ export function PosoTerminal() {
             >
               <img
                 src={l.image}
-                alt={l.name}
+                alt={l.alt}
                 width={512}
                 height={512}
                 loading="lazy"

@@ -12,7 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
-
+import { createPageHead } from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -79,21 +79,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "POSO | Phần mềm quản lý bán hàng cho shop thời trang" },
-      { name: "description", content: "POSO giúp chủ shop thời trang quản lý tồn kho, bán hàng đa kênh và theo dõi doanh thu mọi lúc, mọi nơi trên điện thoại." },
+      ...createPageHead().meta,
       { name: "author", content: "POSO" },
-      { property: "og:title", content: "POSO | Phần mềm quản lý bán hàng cho shop thời trang" },
-      { property: "og:description", content: "POSO giúp chủ shop thời trang quản lý tồn kho, bán hàng đa kênh và theo dõi doanh thu mọi lúc, mọi nơi trên điện thoại." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@poso.vn" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "icon", type: "image/png", sizes: "64x64", href: "/favicon.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -132,5 +126,4 @@ function RootComponent() {
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
-
 }
