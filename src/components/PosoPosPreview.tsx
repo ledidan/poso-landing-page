@@ -1,121 +1,206 @@
-import { motion } from "motion/react";
-import { Search, ShoppingBag, TrendingUp, Receipt } from "lucide-react";
+import { PosoLogo } from "@/components/PosoLogo";
+import {
+  Check,
+  ChevronDown,
+  CreditCard,
+  Plus,
+  Search,
+  ShoppingBag,
+  SlidersHorizontal,
+  Wifi,
+} from "lucide-react";
 import imgTee from "@/assets/product-ao-thun.jpg";
 import imgShirt from "@/assets/product-so-mi.jpg";
 import imgJeans from "@/assets/product-jeans.jpg";
 import imgHoodie from "@/assets/product-hoodie.jpg";
 
 const products = [
-  { name: "Áo thun cotton", image: imgTee, price: "249.000", sizes: ["S", "M", "L"], stock: 24 },
-  { name: "Áo sơ mi linen", image: imgShirt, price: "459.000", sizes: ["M", "L", "XL"], stock: 12 },
-  { name: "Quần jeans slim", image: imgJeans, price: "690.000", sizes: ["29", "30", "31"], stock: 8 },
-  { name: "Hoodie nỉ bông", image: imgHoodie, price: "520.000", sizes: ["M", "L"], stock: 3 },
+  {
+    name: "Áo thun cotton",
+    image: imgTee,
+    price: "249.000",
+    variant: "Đen",
+    sizes: "S · M · L",
+    stock: 24,
+  },
+  {
+    name: "Quần jeans slim",
+    image: imgJeans,
+    price: "690.000",
+    variant: "Xanh denim",
+    sizes: "29 · 30 · 31",
+    stock: 8,
+  },
+  {
+    name: "Áo sơ mi linen",
+    image: imgShirt,
+    price: "459.000",
+    variant: "Trắng",
+    sizes: "M · L · XL",
+    stock: 12,
+  },
+  {
+    name: "Hoodie nỉ bông",
+    image: imgHoodie,
+    price: "520.000",
+    variant: "Be",
+    sizes: "M · L",
+    stock: 3,
+  },
 ];
 
-const cart = [
-  { name: "Áo thun cotton", variant: "Đen · M", price: "249.000", qty: 2 },
-  { name: "Áo sơ mi linen", variant: "Trắng · L", price: "459.000", qty: 1 },
-];
-
+/** A static product illustration, not a live till. Keep sample figures explicit. */
 export function PosoPosPreview() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      className="rounded-[1.75rem] border border-border bg-card p-3 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.28)] sm:p-4"
-    >
-      {/* Thanh trên */}
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex min-w-0 items-center gap-2">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-poso text-xs font-bold text-poso-foreground">
-            P
+    <figure className="pos-preview">
+      <div className="pos-window">
+        <div className="pos-window-bar" aria-hidden="true">
+          <div className="pos-window-dots">
+            <i />
+            <i />
+            <i />
+          </div>
+          <span>Poso / Bán hàng</span>
+          <span className="pos-online">
+            <Wifi size={11} /> Đã đồng bộ
           </span>
-          <span className="truncate text-sm font-semibold text-foreground">Bán hàng</span>
         </div>
-        <div className="flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs text-muted-foreground">
-          <Search className="h-3.5 w-3.5 shrink-0" />
-          <span className="hidden sm:inline">Tìm sản phẩm hoặc quét mã</span>
-          <span className="sm:hidden">Quét mã</span>
+        <div className="pos-toolbar">
+          <PosoLogo className="w-14" />
+          <span className="pos-active-tab">
+            <ShoppingBag size={13} /> Bán hàng
+          </span>
+          <span className="pos-shop">
+            Shop của bạn <ChevronDown size={12} />
+          </span>
+          <span className="pos-avatar" aria-hidden="true">
+            H
+          </span>
         </div>
-      </div>
-
-      {/* Số liệu nhanh */}
-      <div className="mt-3 grid grid-cols-2 gap-2">
-        <div className="rounded-2xl bg-muted/70 p-3">
-          <p className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
-            <Receipt className="h-3.5 w-3.5" /> Đơn hôm nay
-          </p>
-          <p className="mt-1 text-lg font-bold text-foreground">38</p>
-        </div>
-        <div className="rounded-2xl bg-muted/70 p-3">
-          <p className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
-            <TrendingUp className="h-3.5 w-3.5" /> Doanh thu hôm nay
-          </p>
-          <p className="mt-1 text-lg font-bold text-poso">14.280.000đ</p>
-        </div>
-      </div>
-
-      {/* Lưới sản phẩm */}
-      <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
-        {products.map((p) => (
-          <div key={p.name} className="rounded-2xl border border-border bg-background p-2">
-            <img
-              src={p.image}
-              alt={p.name}
-              width={512}
-              height={512}
-              loading="lazy"
-              className="aspect-square w-full rounded-xl object-cover"
-            />
-            <p className="mt-2 truncate text-[12px] font-semibold text-foreground">{p.name}</p>
-            <p className="text-[12px] font-bold text-poso">{p.price}đ</p>
-            <div className="mt-1.5 flex flex-wrap gap-1">
-              {p.sizes.map((s) => (
-                <span
-                  key={s}
-                  className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground"
-                >
-                  {s}
-                </span>
+        <div className="pos-workspace">
+          <div className="pos-catalog">
+            <div className="pos-search" aria-hidden="true">
+              <Search size={13} />
+              <span>Tìm sản phẩm hoặc quét mã</span>
+              <span className="pos-shortcut">F3</span>
+            </div>
+            <div className="pos-categories" aria-hidden="true">
+              <span>Tất cả</span>
+              <span>Áo</span>
+              <span>Quần</span>
+              <SlidersHorizontal size={12} />
+            </div>
+            <div className="pos-products">
+              {products.map((product) => (
+                <div className="pos-product" key={product.name}>
+                  <div className="pos-product-photo">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      width={512}
+                      height={512}
+                      decoding="async"
+                    />
+                    <span className="pos-product-add" aria-hidden="true">
+                      <Plus size={12} />
+                    </span>
+                  </div>
+                  <div className="pos-product-info">
+                    <p className="pos-product-name">{product.name}</p>
+                    <p className="pos-product-variant">
+                      {product.variant} · {product.sizes}
+                    </p>
+                    <div className="pos-product-bottom">
+                      <strong>{product.price}đ</strong>
+                      <span className={product.stock <= 3 ? "pos-stock-low" : ""}>
+                        Tồn {product.stock}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
-            <p
-              className={`mt-1.5 text-[10px] font-semibold ${
-                p.stock <= 3 ? "text-destructive" : "text-muted-foreground"
-              }`}
-            >
-              Tồn: {p.stock} {p.stock <= 3 ? "· sắp hết" : ""}
-            </p>
           </div>
-        ))}
-      </div>
-
-      {/* Giỏ hàng */}
-      <div className="mt-3 rounded-2xl border border-border bg-background p-3">
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-          Đơn đang tạo
-        </p>
-        <div className="mt-2 space-y-2">
-          {cart.map((c) => (
-            <div key={c.name} className="flex items-center justify-between gap-3 text-[12px]">
-              <div className="min-w-0">
-                <p className="truncate font-semibold text-foreground">{c.name}</p>
-                <p className="text-muted-foreground">{c.variant}</p>
-              </div>
-              <p className="shrink-0 font-semibold text-foreground">
-                {c.price}đ <span className="text-muted-foreground">x{c.qty}</span>
-              </p>
+          <div className="pos-order">
+            <div className="pos-order-heading">
+              <span>Đơn hàng #038</span>
+              <span className="pos-order-dot" aria-hidden="true" />
             </div>
-          ))}
+            <p className="pos-customer">
+              <span>Khách lẻ</span>
+              <span>3 sản phẩm</span>
+            </p>
+            <div className="pos-order-items">
+              <div className="pos-order-item">
+                <img src={imgTee} alt="" width={36} height={42} />
+                <div>
+                  <p>Áo thun cotton</p>
+                  <span>Đen / M · SL: 2</span>
+                  <strong>498.000đ</strong>
+                </div>
+              </div>
+              <div className="pos-order-item">
+                <img src={imgShirt} alt="" width={36} height={42} />
+                <div>
+                  <p>Áo sơ mi linen</p>
+                  <span>Trắng / L · SL: 1</span>
+                  <strong>459.000đ</strong>
+                </div>
+              </div>
+            </div>
+            <div className="pos-order-summary">
+              <p>
+                <span>Tạm tính</span>
+                <span>957.000đ</span>
+              </p>
+              <p>
+                <span>Giảm giá</span>
+                <span>0đ</span>
+              </p>
+              <div className="pos-order-total">
+                <span>Tổng cộng</span>
+                <strong>957.000đ</strong>
+              </div>
+              <div className="pos-payment">
+                <CreditCard size={14} />
+                <span>Thanh toán</span>
+                <span>F9</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="mt-3 flex items-center justify-between rounded-xl bg-poso px-3 py-2.5 text-poso-foreground">
-          <span className="flex items-center gap-1.5 text-xs font-medium">
-            <ShoppingBag className="h-4 w-4" /> 3 sản phẩm
-          </span>
-          <span className="text-sm font-bold">957.000đ</span>
+        <div className="pos-today">
+          <div>
+            <span className="pos-today-icon">
+              <ShoppingBag size={17} />
+            </span>
+            <div>
+              <p>Đơn hôm nay</p>
+              <strong>
+                38 <span>đơn hàng</span>
+              </strong>
+            </div>
+          </div>
+          <div>
+            <span className="pos-revenue-dot" aria-hidden="true" />
+            <div>
+              <p>Doanh thu hôm nay</p>
+              <strong>
+                14.280.000<span>đ</span>
+              </strong>
+            </div>
+            <div className="pos-mini-chart" aria-hidden="true">
+              {[35, 52, 42, 70, 58, 82, 100].map((height, i) => (
+                <i key={i} style={{ height: `${height}%` }} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </motion.div>
+      <figcaption>
+        <Check size={13} aria-hidden="true" /> Một màn hình. Trọn việc bán hàng.
+        <span>Giao diện minh họa</span>
+      </figcaption>
+    </figure>
   );
 }

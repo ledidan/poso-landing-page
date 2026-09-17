@@ -1,378 +1,295 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useRef, useState } from "react";
-import { motion, useScroll, useMotionValueEvent } from "motion/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
+import { PosoPosPreview } from "@/components/PosoPosPreview";
+import { PosoLogo } from "@/components/PosoLogo";
 import { PosoTerminal } from "@/components/PosoTerminal";
-import { SignupDialog } from "@/components/SignupDialog";
-
-import { ChaosToControl } from "@/components/ChaosToControl";
 import { FloatingContact } from "@/components/FloatingContact";
-import storeHero from "@/assets/poso-store-hero.jpg";
-import sellerHero from "@/assets/poso-seller-hero.jpg";
-import staffInventory from "@/assets/poso-staff-inventory.jpg";
-import ownerReport from "@/assets/poso-owner-report.jpg";
-import caseStore from "@/assets/poso-case-store.jpg";
+import { TrialSignupForm } from "@/components/TrialSignupForm";
+import workflowImage from "@/assets/poso-workflow-simulation.jpg";
+import { SignupDialog } from "@/components/SignupDialog";
+import "@/styles/ads-landing.css";
+
+const title = "Phần mềm quản lý shop thời trang | Poso";
+const description =
+  "Poso giúp shop thời trang quản lý bán hàng, sản phẩm, tồn kho và doanh thu đơn giản hơn. Dùng thử miễn phí.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "POSO — Bán hàng thời trang gọn hơn" },
-      {
-        name: "description",
-        content:
-          "POSO giúp shop thời trang bán hàng nhanh, quản lý size — màu — SKU và tồn kho trong một hệ thống duy nhất.",
-      },
-      { property: "og:title", content: "POSO — Bán hàng thời trang gọn hơn" },
-      {
-        property: "og:description",
-        content:
-          "Bán hàng, quản lý size — màu — SKU và tồn kho. Tất cả trong một hệ thống.",
-      },
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://www.poso.vn/poso_og.jpg" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "https://www.poso.vn/poso_og.jpg" },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: description },
+      { name: "twitter:card", content: "summary" },
     ],
+    links: [{ rel: "canonical", href: "https://poso-style-launchpad.lovable.app/" }],
   }),
-  component: Index,
+  component: AdsLanding,
 });
 
-const ease = [0.16, 1, 0.3, 1] as const;
-
-const steps = [
+const workflow = [
   {
-    no: "01",
     title: "Tạo sản phẩm gốc",
-    lead: "Một mẫu áo là một sản phẩm — không phải mười dòng rời rạc.",
-    body: [
-      "Bạn nhập tên mẫu, ngành hàng, chất liệu, giá bán và ảnh. Ví dụ: “Áo thun cotton basic”, giá 249.000đ.",
-      "Tất cả biến thể sau này đều nằm dưới sản phẩm gốc này, nên báo cáo doanh thu theo mẫu luôn gọn và dễ đọc.",
-    ],
-    image: sellerHero,
-    alt: "Chủ shop thời trang tạo sản phẩm mới trên POSO",
+    copy: "Nhập tên mẫu, chất liệu, giá và ảnh một lần. Các biến thể cùng nằm dưới một sản phẩm, báo cáo theo mẫu cũng gọn hơn.",
   },
   {
-    no: "02",
-    title: "Gắn thuộc tính size và màu",
-    lead: "Chọn bộ size và bảng màu một lần, POSO tự sinh toàn bộ biến thể.",
-    body: [
-      "Bạn chọn size S, M, L, XL và màu Đen, Trắng, Be. POSO tạo sẵn 12 biến thể tương ứng, mỗi biến thể có giá và tồn kho riêng.",
-      "Nếu một màu chỉ có vài size, bạn tắt các ô không bán — kho sẽ không bao giờ hiện những biến thể không tồn tại.",
-    ],
-    image: staffInventory,
-    alt: "Nhân viên shop kiểm size và màu trên kệ hàng",
+    title: "Gắn size và màu",
+    copy: "Chọn bộ size và bảng màu, Poso tạo các biến thể tương ứng. Mỗi màu, mỗi size có giá và số lượng tồn riêng.",
   },
   {
-    no: "03",
-    title: "Sinh mã SKU theo quy tắc",
-    lead: "Mã SKU tự đặt theo công thức, không còn gõ tay mỗi lần nhập hàng.",
-    body: [
-      "Quy tắc mặc định: MÃ MẪU – MÀU – SIZE. Ví dụ TS-BLK-M là áo thun đen size M, TS-WHT-L là áo thun trắng size L.",
-      "Mỗi mã gắn với một mã vạch để quét tại quầy. Không trùng mã, không nhầm biến thể khi hai nhân viên cùng nhập hàng.",
-    ],
-    image: caseStore,
-    alt: "Quầy thu ngân shop thời trang với máy quét mã SKU",
+    title: "Sinh mã SKU",
+    copy: "Đặt mã theo mẫu – màu – size. TS-BLK-M là áo thun đen size M; mỗi mã gắn với mã vạch để quét ngay tại quầy.",
   },
   {
-    no: "04",
-    title: "Nhập kho theo từng biến thể",
-    lead: "Số lượng ghi vào đúng ô size — màu, không gộp chung.",
-    body: [
-      "Khi hàng về, bạn quét mã hoặc nhập bảng: Đen/M 12 cái, Đen/L 8 cái, Trắng/S 5 cái. POSO ghi nhận giá nhập từng lần để tính lãi thật.",
-      "Có nhiều chi nhánh hoặc kho phụ thì mỗi nơi có tồn riêng, tổng vẫn xem được ở một màn hình.",
-    ],
-    image: staffInventory,
-    alt: "Nhân viên nhập hàng vào kho theo từng size và màu",
+    title: "Nhập kho theo biến thể",
+    copy: "Hàng về được ghi vào đúng ô size và màu, cùng giá nhập từng lần. Tồn kho từng chi nhánh được quản lý riêng, tổng vẫn xem chung.",
   },
   {
-    no: "05",
-    title: "Bán hàng và trừ kho tức thì",
-    lead: "Quét mã, chọn size — màu, kho giảm ngay giây đó.",
-    body: [
-      "Tại quầy hoặc trên máy cầm tay, nhân viên chọn sản phẩm rồi chọn ô màu và size. Màn hình hiện tồn còn lại để tránh bán hàng đã hết.",
-      "Bán online, livestream hay tại cửa hàng đều trừ chung một kho, nên không còn cảnh chốt đơn rồi báo khách hết hàng.",
-    ],
-    image: sellerHero,
-    alt: "Người bán chốt đơn hàng thời trang trên POSO",
+    title: "Bán hàng, tự động trừ kho",
+    copy: "Quét mã, chọn đúng màu và size, tạo đơn rồi thanh toán. Bán tại cửa hàng, online hay livestream đều cập nhật cùng một kho.",
   },
   {
-    no: "06",
     title: "Kiểm kho và đọc số liệu",
-    lead: "Biết mẫu nào chạy, size nào tồn, màu nào nên nhập thêm.",
-    body: [
-      "Kiểm kho bằng cách quét lần lượt, POSO tự so lệch và ghi biên bản điều chỉnh.",
-      "Báo cáo cho biết size M bán gấp ba size XL, màu đen chiếm 48% doanh thu — đủ cơ sở để quyết định đơn nhập kế tiếp.",
-    ],
-    image: ownerReport,
-    alt: "Chủ shop xem báo cáo tồn kho và doanh thu của POSO",
+    copy: "Đối chiếu tồn thực tế, theo dõi doanh thu và mẫu bán chạy mỗi ngày. Biết size nào tồn, màu nào nên nhập thêm để quyết định dễ hơn.",
   },
 ];
 
-function Index() {
-  const { scrollY } = useScroll();
-  const navRef = useRef<HTMLDivElement>(null);
-  const [scrolled, setScrolled] = useState(false);
+const stock = [
+  { color: "Đen", sku: "TS-BLK", quantities: [12, 8, 2] },
+  { color: "Trắng", sku: "TS-WHT", quantities: [6, 3, 0] },
+];
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 80);
-  });
-
+function TrialButton() {
   return (
-    <main className="bg-background">
-      {/* Minimal nav — transparent on hero, solid on scroll */}
-      <motion.nav
-        ref={navRef}
-        initial={false}
-        animate={{
-          backgroundColor: scrolled ? "rgba(255, 255, 255, 0.92)" : "rgba(255, 255, 255, 0)",
-        }}
-        transition={{ duration: 0.25, ease }}
-        className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-5 py-4 backdrop-blur sm:px-8"
-      >
-        <a href="#" className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-poso text-xs font-bold text-poso-foreground">
-            P
-          </span>
-          <span
-            className={`text-sm font-bold tracking-tight transition-colors duration-300 ${
-              scrolled ? "text-foreground" : "text-white"
-            }`}
-          >
-            POSO
-          </span>
-        </a>
-        <SignupDialog>
-          <button
-            type="button"
-            className={`rounded-full border px-4 py-1.5 text-xs font-semibold backdrop-blur transition-colors ${
-              scrolled
-                ? "border-foreground/10 bg-foreground/5 text-foreground hover:bg-foreground/10"
-                : "border-white/20 bg-white/10 text-white hover:bg-white/20"
-            }`}
-          >
-            Bắt đầu ngay →
-          </button>
-        </SignupDialog>
-      </motion.nav>
-
-      {/* SECTION 01 — HERO */}
-      <section className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden bg-[oklch(0.14_0.02_60)] px-5 pb-16 pt-20 sm:px-8 lg:justify-center lg:pb-0">
-        <motion.img
-          src={storeHero}
-          alt="Không gian cửa hàng thời trang cao cấp với quầy thu ngân dùng POSO"
-          width={1600}
-          height={1008}
-          fetchPriority="high"
-          initial={{ opacity: 0, scale: 1.08 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.6, ease }}
-          className="absolute inset-0 h-full w-full object-cover"
+    <SignupDialog compact>
+      <button type="button" className="ads-trial-button group">
+        Dùng thử miễn phí
+        <ArrowRight
+          aria-hidden="true"
+          className="h-5 w-5 transition-transform group-hover:translate-x-1"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.12_0.02_60)] via-[oklch(0.12_0.02_60)]/80 to-[oklch(0.12_0.02_60)]/40" />
+      </button>
+    </SignupDialog>
+  );
+}
 
-        <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-          <div>
-            <motion.h1
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.15, ease }}
-              className="text-[clamp(2.5rem,8.5vw,5.25rem)] font-extrabold leading-[0.95] tracking-[-0.03em] text-white"
-            >
+function AdsLanding() {
+  return (
+    <div className="ads-landing">
+      <a href="#noi-dung" className="ads-skip-link">
+        Đến nội dung chính
+      </a>
+      <header className="ads-container ads-header">
+        <a href="/" aria-label="Poso — Bán hàng tinh gọn" className="ads-logo">
+          <PosoLogo />
+        </a>
+        <a href="https://app.poso.vn" className="ads-login">
+          Đăng nhập <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </a>
+      </header>
+
+      <main id="noi-dung">
+        <section aria-labelledby="intro-title" className="ads-original-hero ads-container">
+          <div className="ads-original-copy ads-enter">
+            <p className="ads-eyebrow">
+              <span aria-hidden="true" /> POSO · BÁN HÀNG TINH GỌN
+            </p>
+            <h1 id="intro-title">
               Bán hàng thời trang.
               <br />
-              <span className="text-poso">Gọn hơn với POSO.</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.5, ease }}
-              className="mt-6 max-w-md text-base leading-relaxed text-white/65 sm:text-lg"
-            >
+              <span>Gọn hơn với Poso.</span>
+            </h1>
+            <p>
               Bán hàng, quản lý size — màu — SKU và tồn kho.
               <br className="hidden sm:block" /> Tất cả trong một hệ thống.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 1.6, ease }}
-              className="mt-8"
-            >
-              <SignupDialog>
-                <button
-                  type="button"
-                  className="group inline-flex items-center gap-2 rounded-full bg-poso px-7 py-4 text-base font-semibold text-poso-foreground shadow-lg shadow-poso/25 transition-transform hover:scale-[1.03]"
-                >
-                  Dùng thử POSO miễn phí
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </button>
-              </SignupDialog>
-            </motion.div>
+            </p>
+            <div className="ads-hero-action">
+              <TrialButton />
+              <p className="ads-reassurance">
+                <Check size={16} aria-hidden="true" /> Thiết lập nhanh · Dễ sử dụng
+              </p>
+            </div>
           </div>
-
-          <div className="relative mx-auto w-full max-w-[19rem] pb-14 lg:max-w-sm">
+          <div className="ads-original-terminal">
             <PosoTerminal />
           </div>
-        </div>
-      </section>
-
-      {/* SECTION 02 — FROM CHAOS TO CONTROL */}
-      <section className="relative overflow-hidden px-5 py-24 sm:px-8 sm:py-32">
-        {/* Nền nối liền từ ảnh hero */}
-        <img
-          src={storeHero}
-          alt=""
-          aria-hidden
-          loading="lazy"
-          className="pointer-events-none absolute inset-x-0 top-0 h-[42rem] w-full object-cover opacity-[0.12]"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-[42rem] bg-gradient-to-b from-[oklch(0.14_0.02_60)]/35 via-background/85 to-background"
-        />
-        <div className="relative mx-auto max-w-6xl">
-          <motion.h2
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.9, ease }}
-            className="max-w-3xl text-[clamp(2.25rem,8vw,4.5rem)] font-extrabold leading-[0.98] tracking-[-0.03em] text-foreground"
-          >
-            Size. Màu. SKU. Tồn kho.
-            <br />
-            <span className="text-poso">Không còn rối.</span>
-          </motion.h2>
-
-          <div className="mt-16 sm:mt-24">
-            <ChaosToControl />
+        </section>
+        <section aria-labelledby="hero-title" className="ads-hero">
+          <div className="ads-container ads-hero-grid">
+            <div className="ads-hero-copy ads-enter">
+              <p className="ads-eyebrow">
+                <span aria-hidden="true" /> Phần mềm quản lý shop thời trang
+              </p>
+              <h2 id="hero-title">
+                Quản lý shop
+                <br />
+                thời trang
+                <br />
+                <span>đơn giản hơn</span>
+                <br />
+                với Poso.
+              </h2>
+              <p className="ads-hero-description">
+                Bán hàng, quản lý size – màu – SKU, tồn kho và doanh thu trên một nền tảng duy nhất.
+              </p>
+              <div className="ads-hero-action">
+                <TrialButton />
+                <p className="ads-reassurance">
+                  <Check aria-hidden="true" className="h-4 w-4" /> Thiết lập nhanh · Dễ sử dụng
+                </p>
+              </div>
+            </div>
+            <div className="ads-product-stage ads-enter">
+              <PosoPosPreview />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* SECTION 03 — STEP BY STEP */}
-      <section>
-        <div className="bg-[oklch(0.14_0.02_60)] px-5 pb-20 pt-28 sm:px-8 sm:pb-28 sm:pt-36">
-          <div className="mx-auto max-w-5xl">
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease }}
-              className="text-xs font-semibold uppercase tracking-[0.28em] text-poso"
-            >
-              Cách POSO hoạt động
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, y: 26 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 1, delay: 0.1, ease }}
-              className="mt-6 text-[clamp(2.25rem,7.5vw,4.75rem)] font-extrabold leading-[0.98] tracking-[-0.03em] text-white"
-            >
-              Sáu bước để shop thời trang
-              <br />
-              <span className="text-poso">hết rối size, màu, SKU.</span>
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.9, delay: 0.3, ease }}
-              className="mt-7 max-w-xl text-base leading-relaxed text-white/65 sm:text-lg"
-            >
-              Đây là cách POSO xử lý phần khó nhất của ngành thời trang: một mẫu áo
-              có nhiều màu, mỗi màu nhiều size, mỗi size một tồn kho riêng.
-            </motion.p>
-          </div>
-        </div>
-
-        <div className="px-5 py-20 sm:px-8 sm:py-28">
-          <div className="mx-auto flex max-w-5xl flex-col gap-24 sm:gap-32">
-            {steps.map((step, i) => (
-              <motion.article
-                key={step.no}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.8, ease }}
-                className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16"
-              >
-                <div className={i % 2 === 1 ? "lg:order-2" : undefined}>
-                  <span className="text-sm font-bold tracking-[0.2em] text-poso">
-                    {step.no}
-                  </span>
-                  <h3 className="mt-4 text-[clamp(1.75rem,5.5vw,3rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-foreground">
-                    {step.title}
-                  </h3>
-                  <p className="mt-4 text-lg font-medium text-foreground/80">
-                    {step.lead}
-                  </p>
-                  {step.body.map((p) => (
-                    <p
-                      key={p.slice(0, 24)}
-                      className="mt-4 text-base leading-relaxed text-muted-foreground"
-                    >
-                      {p}
-                    </p>
+        <section aria-labelledby="workflow-title" className="ads-workflow ads-container">
+          <div className="ads-workflow-intro">
+            <div>
+              <p className="ads-section-label">DÀNH RIÊNG CHO CÁCH SHOP THỜI TRANG VẬN HÀNH</p>
+              <h2 id="workflow-title">
+                Size. Màu. SKU.
+                <br />
+                Tồn kho.
+                <br />
+                <span>Không còn rối.</span>
+              </h2>
+              <p className="ads-workflow-description">
+                Một mẫu áo, nhiều màu, nhiều size. Poso sắp xếp từng biến thể để bạn biết chính xác
+                còn gì, ở đâu — và bán được ngay.
+              </p>
+            </div>
+            <figure className="ads-stock-preview">
+              <figcaption>
+                <span>QUẢN LÝ BIẾN THỂ</span>
+                <strong>Áo thun cotton basic</strong>
+                <p>1 sản phẩm · 2 màu · 3 size · 6 SKU</p>
+              </figcaption>
+              <table>
+                <caption className="sr-only">Số lượng tồn minh họa theo màu và size</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Màu / Size</th>
+                    {["S", "M", "L"].map((size) => (
+                      <th scope="col" key={size}>
+                        {size}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {stock.map((variant) => (
+                    <tr key={variant.color}>
+                      <th scope="row">
+                        <strong>{variant.color}</strong>
+                        <span>{variant.sku}</span>
+                      </th>
+                      {variant.quantities.map((quantity, index) => (
+                        <td key={index} className={quantity <= 3 ? "ads-stock-alert" : undefined}>
+                          <strong>{quantity}</strong>
+                          <span>
+                            {quantity === 0 ? "Hết hàng" : quantity <= 3 ? "Sắp hết" : "Còn hàng"}
+                          </span>
+                        </td>
+                      ))}
+                    </tr>
                   ))}
-                </div>
-                <div className={i % 2 === 1 ? "lg:order-1" : undefined}>
-                  <img
-                    src={step.image}
-                    alt={step.alt}
-                    width={1200}
-                    height={800}
-                    loading="lazy"
-                    className="aspect-[4/3] w-full rounded-3xl object-cover shadow-xl"
-                  />
-                </div>
-              </motion.article>
-            ))}
+                </tbody>
+              </table>
+              <p className="ads-stock-note">
+                <Check size={15} aria-hidden="true" /> Chọn màu + size. Đúng SKU, đúng tồn kho.
+              </p>
+              <p className="ads-stock-caption">Dữ liệu minh họa</p>
+            </figure>
           </div>
-        </div>
-      </section>
+          <div className="ads-workflow-heading">
+            <p className="ads-section-label">CÁCH POSO HOẠT ĐỘNG</p>
+            <h3>
+              Từ nhập hàng đến chốt đơn.
+              <br />
+              Mọi thứ liền mạch.
+            </h3>
+          </div>
+          <div className="ads-workflow-detail">
+            <figure className="ads-workflow-image">
+              <img
+                src={workflowImage}
+                alt="Mô phỏng quy trình shop thời trang: nhận hàng, sắp xếp tồn kho, thanh toán tại quầy và theo dõi báo cáo doanh thu"
+                width={1536}
+                height={1024}
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>Nhập hàng → Quản lý kho → Chốt đơn → Theo dõi doanh thu</figcaption>
+            </figure>
+            <ol className="ads-workflow-steps" role="list">
+              {workflow.map((step, index) => (
+                <li key={step.title}>
+                  <span className="ads-step-number" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h4>{step.title}</h4>
+                  <p>{step.copy}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
 
-      {/* SECTION 04 — CLOSING */}
-      <section className="relative overflow-hidden bg-[oklch(0.14_0.02_60)] px-5 py-24 sm:px-8 sm:py-32">
-        <img
-          src={storeHero}
-          alt=""
-          aria-hidden
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover opacity-25"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.12_0.02_60)] via-[oklch(0.12_0.02_60)]/85 to-[oklch(0.12_0.02_60)]/40" />
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.9, ease }}
-          className="relative mx-auto max-w-5xl"
-        >
-          <p className="text-[clamp(2rem,7vw,3.75rem)] font-extrabold leading-[1] tracking-[-0.03em] text-white">
-            Bán nhanh.
-            <br />
-            Quản kho rõ.
-          </p>
-          <p className="mt-5 max-w-md text-base leading-relaxed text-white/65">
-            POSO giúp shop thời trang quản lý những thứ quan trọng nhất — để bạn tập
-            trung vào việc bán hàng.
-          </p>
-          <SignupDialog>
-            <button
-              type="button"
-              className="group mt-9 inline-flex items-center gap-2 rounded-full bg-poso px-8 py-4 text-base font-semibold text-poso-foreground shadow-lg shadow-poso/25 transition-transform hover:scale-[1.03] sm:text-lg"
-            >
-              Bắt đầu với POSO
-              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </button>
-          </SignupDialog>
-          <p className="mt-10 text-sm text-white/50">
-            POSO — Bán hàng tinh gọn cho shop thời trang.
-          </p>
-        </motion.div>
-      </section>
+        <section aria-labelledby="final-cta-title" className="ads-container ads-final-section">
+          <div className="ads-final-cta">
+            <div className="ads-final-copy">
+              <p className="ads-section-label">BÁN NHANH. QUẢN KHO RÕ.</p>
+              <h2 id="final-cta-title">
+                Sẵn sàng bán hàng
+                <br className="hidden sm:block" /> tinh gọn?
+              </h2>
+              <p>Để Poso lo sản phẩm, tồn kho và doanh thu — bạn tập trung vào việc bán hàng.</p>
+            </div>
+            <div className="ads-final-action">
+              <TrialButton />
+              <p>Không cần thẻ tín dụng · Bắt đầu nhanh</p>
+            </div>
+          </div>
+        </section>
+        <section aria-labelledby="contact-title" className="ads-contact-section ads-container">
+          <div className="ads-contact-copy">
+            <p className="ads-section-label">POSO ĐỒNG HÀNH CÙNG SHOP</p>
+            <h2 id="contact-title">
+              Để lại thông tin.
+              <br />
+              <span>Poso liên hệ với bạn.</span>
+            </h2>
+            <p>
+              Chia sẻ nhu cầu của shop, đội ngũ Poso sẽ tư vấn và hướng dẫn bạn bắt đầu dùng thử.
+            </p>
+            <a href="tel:0977140536" className="ads-contact-hotline">
+              Hotline: 0977 140 536
+            </a>
+          </div>
+          <div className="ads-contact-form">
+            <TrialSignupForm inline />
+          </div>
+        </section>
+      </main>
 
+      <footer className="ads-container ads-footer">
+        <p className="ads-footer-brand">
+          <PosoLogo className="w-20" /> <span>— Bán hàng tinh gọn</span>
+        </p>
+        <nav aria-label="Thông tin Poso">
+          <a href="https://www.poso.vn/bang-gia-phan-mem">Bảng giá</a>
+          <a href="https://www.poso.vn/privacy">Chính sách bảo mật</a>
+          <a href="https://www.poso.vn/terms">Điều khoản</a>
+        </nav>
+        <p>© 2026 Poso</p>
+      </footer>
       <FloatingContact />
-    </main>
+    </div>
   );
 }
