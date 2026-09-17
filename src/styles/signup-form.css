@@ -99,3 +99,63 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Warm paper treatment for the contact section; dialog fields retain their own style. */
+.signup-form-inline .signup-field label {
+  color: oklch(0.36 0.025 55);
+  font-size: 12px;
+}
+.signup-form-inline .signup-field :is(input, textarea) {
+  min-height: 49px;
+  padding: 12px 14px;
+  border: 1px solid oklch(0.84 0.025 65);
+  border-radius: 11px;
+  background: oklch(0.995 0.005 75 / 90%);
+  box-shadow: 0 2px 3px oklch(0.4 0.03 55 / 3%);
+  transition:
+    border-color 160ms,
+    box-shadow 160ms,
+    background-color 160ms;
+}
+.signup-form-inline .signup-field :is(input, textarea)::placeholder {
+  color: oklch(0.57 0.02 60);
+  font-size: 13px;
+}
+.signup-form-inline .signup-field :is(input, textarea):hover {
+  border-color: oklch(0.7 0.065 55);
+}
+.signup-form-inline .signup-field :is(input, textarea):focus-visible {
+  outline: none;
+  border-color: oklch(0.61 0.18 43);
+  background: oklch(1 0 0);
+  box-shadow: 0 0 0 3px oklch(0.7 0.16 50 / 16%);
+}
+.signup-form-inline .signup-field :is(input, textarea)[aria-invalid="true"] {
+  border-color: oklch(0.53 0.19 27);
+  box-shadow: 0 0 0 3px oklch(0.6 0.19 27 / 10%);
+}
+.signup-form-inline .signup-submit {
+  min-height: 54px;
+  justify-content: space-between;
+  padding-inline: 20px;
+  border: 1px solid oklch(0.54 0.18 40);
+  border-radius: 12px;
+  background: linear-gradient(115deg, oklch(0.62 0.19 42), oklch(0.55 0.18 36));
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 23%),
+    0 6px 14px oklch(0.55 0.16 40 / 17%);
+  transition:
+    box-shadow 160ms,
+    filter 160ms;
+}
+.signup-form-inline .signup-submit:hover:not(:disabled) {
+  filter: brightness(1.06);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 23%),
+    0 8px 20px oklch(0.55 0.16 40 / 25%);
+}
+.signup-form-inline .signup-privacy {
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.8;
+}

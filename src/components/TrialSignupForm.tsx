@@ -20,11 +20,13 @@ const schema = z.object({
 export function TrialSignupForm({
   compact = false,
   inline = false,
+  minimal = false,
   onSuccess,
   onPendingChange,
 }: {
   compact?: boolean;
   inline?: boolean;
+  minimal?: boolean;
   onSuccess?: () => void;
   onPendingChange?: (pending: boolean) => void;
 }) {
@@ -145,31 +147,33 @@ export function TrialSignupForm({
       className={inline ? "signup-form signup-form-inline" : "signup-form"}
     >
       <fieldset disabled={loading} className="signup-fields">
-        {fields.map((field) => (
-          <div key={field.name} className="signup-field">
-            <Label htmlFor={`${id}-${field.name}`}>
-              {field.label}
-              {field.required ? " *" : ""}
-            </Label>
-            <Input
-              id={`${id}-${field.name}`}
-              name={field.name}
-              type={field.name === "phone" ? "tel" : field.name === "email" ? "email" : "text"}
-              autoComplete={field.autoComplete}
-              required={field.required}
-              maxLength={field.maxLength}
-              placeholder={field.placeholder}
-              aria-invalid={!!errors[field.name]}
-              aria-describedby={errors[field.name] ? `${id}-${field.name}-error` : undefined}
-            />
-            {errors[field.name] && (
-              <p id={`${id}-${field.name}-error`} role="alert" className="signup-error">
-                {errors[field.name]}
-              </p>
-            )}
-          </div>
-        ))}
-        {!compact && (
+        {fields
+          .filter((field) => !minimal || field.required)
+          .map((field) => (
+            <div key={field.name} className="signup-field">
+              <Label htmlFor={`${id}-${field.name}`}>
+                {field.label}
+                {field.required ? " *" : ""}
+              </Label>
+              <Input
+                id={`${id}-${field.name}`}
+                name={field.name}
+                type={field.name === "phone" ? "tel" : field.name === "email" ? "email" : "text"}
+                autoComplete={field.autoComplete}
+                required={field.required}
+                maxLength={field.maxLength}
+                placeholder={field.placeholder}
+                aria-invalid={!!errors[field.name]}
+                aria-describedby={errors[field.name] ? `${id}-${field.name}-error` : undefined}
+              />
+              {errors[field.name] && (
+                <p id={`${id}-${field.name}-error`} role="alert" className="signup-error">
+                  {errors[field.name]}
+                </p>
+              )}
+            </div>
+          ))}
+        {!compact && !minimal && (
           <div className="signup-field signup-field-wide">
             <Label htmlFor={`${id}-note`}>Bạn cần Poso hỗ trợ gì?</Label>
             <Textarea
@@ -202,18 +206,24 @@ export function TrialSignupForm({
           </>
         ) : (
           <>
-            {inline ? "Gửi thông tin liên hệ" : compact ? "Dùng thử miễn phí" : "Gửi đăng ký"}
+            {minimal
+              ? "Nhận tư vấn"
+              : inline
+                ? "Gửi thông tin liên hệ"
+                : compact
+                  ? "Dùng thử miễn phí"
+                  : "Gửi đăng ký"}
             <ArrowRight size={18} aria-hidden="true" />
           </>
         )}
       </button>
       {inline && (
         <p className="signup-privacy">
-          Poso sử dụng thông tin để liên hệ hỗ trợ bạn.{" "}
+          {!minimal && <>Poso sử dụng thông tin để liên hệ hỗ trợ bạn. </>}
           <a href="https://www.poso.vn/privacy" target="_blank" rel="noopener noreferrer">
             Chính sách bảo mật
           </a>
-          .
+          {!minimal && "."}
         </p>
       )}
     </form>

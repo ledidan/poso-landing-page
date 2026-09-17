@@ -1140,48 +1140,65 @@
 .ads-workflow-detail .ads-workflow-steps p {
   grid-column: 2;
 }
+.ads-hero h2.ads-price-heading {
+  font-size: clamp(38px, 4.5vw, 62px);
+  line-height: 1.25;
+  letter-spacing: -2px;
+}
+.ads-price-heading > span {
+  display: inline-block;
+  font-size: clamp(64px, 7vw, 96px);
+  letter-spacing: -4px;
+  white-space: nowrap;
+}
+.ads-price-heading > small {
+  display: inline-block;
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
 .ads-contact-section {
-  display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  align-items: start;
-  gap: 80px;
-  padding-block: 35px 70px;
-}
-.ads-contact-copy {
-  padding-top: 30px;
-}
-.ads-contact-copy h2 {
-  margin-top: 20px;
-  font-size: clamp(30px, 3vw, 42px);
-  font-weight: 700;
-  letter-spacing: -1.3px;
-  line-height: 1.35;
-}
-.ads-contact-copy h2 span {
-  color: var(--ads-photo-accent);
-}
-.ads-contact-copy > p:not(.ads-section-label) {
-  max-width: 360px;
-  margin-top: 20px;
-  font-size: 15px;
-  line-height: 1.9;
-  color: var(--ads-photo-muted);
-}
-.ads-contact-hotline {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  min-height: 44px;
-  margin-top: 18px;
-  color: var(--ads-photo-accent);
-  font-size: 16px;
-  font-weight: 600;
+  gap: 28px;
+  padding-block: 45px 85px;
+}
+.ads-contact-section > h2 {
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.3;
+  text-align: center;
 }
 .ads-contact-form {
+  position: relative;
+  width: min(100%, 560px);
   min-width: 0;
   padding: 32px;
-  border-radius: 20px;
-  background: oklch(0.99 0.004 65);
-  box-shadow: 0 15px 40px oklch(0.1 0 0 / 16%);
+  border: 1px solid oklch(1 0 0 / 85%);
+  border-radius: 25px;
+  background:
+    radial-gradient(ellipse at 100% 0%, oklch(0.9 0.065 60 / 75%), transparent 55%),
+    oklch(0.975 0.014 75);
+  box-shadow:
+    0 0 0 6px oklch(0.9 0.07 55 / 8%),
+    0 18px 45px oklch(0.08 0.015 55 / 24%);
+}
+.ads-contact-form::before {
+  content: "";
+  position: absolute;
+  left: calc(50% - 35px);
+  top: -1px;
+  width: 70px;
+  height: 4px;
+  border-radius: 0 0 4px 4px;
+  background: oklch(0.68 0.19 43);
+}
+.ads-contact-form .signup-form-inline .signup-submit {
+  justify-content: center;
 }
 .ads-footer-brand {
   display: flex;
@@ -1247,9 +1264,6 @@
   .ads-workflow-detail {
     gap: 28px;
   }
-  .ads-contact-section {
-    gap: 35px;
-  }
   .ads-contact-form {
     padding: 25px;
   }
@@ -1285,21 +1299,11 @@
     font-size: 10px;
   }
   .ads-contact-section {
-    grid-template-columns: 1fr;
-    gap: 28px;
     padding-block: 10px 38px;
   }
-  .ads-contact-copy {
-    padding-top: 0;
-  }
-  .ads-contact-copy h2 {
-    font-size: 30px;
-  }
-  .ads-contact-copy > p:not(.ads-section-label) {
-    font-size: 14px;
-  }
   .ads-contact-form {
-    padding: 22px;
+    padding: 24px 18px;
+    border-radius: 19px;
   }
   .ads-footer {
     padding-bottom: 100px;

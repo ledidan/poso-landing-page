@@ -66,7 +66,7 @@ export function PosoTerminal() {
             >
               <img
                 src={l.image}
-                alt={l.alt}
+                alt={`${l.name} màu ${l.color.toLowerCase()}`}
                 width={512}
                 height={512}
                 loading="lazy"

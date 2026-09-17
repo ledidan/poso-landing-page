@@ -124,14 +124,10 @@ function AdsLanding() {
               <p className="ads-eyebrow">
                 <span aria-hidden="true" /> Phần mềm quản lý shop thời trang
               </p>
-              <h2 id="hero-title">
-                Quản lý shop
+              <h2 id="hero-title" className="ads-price-heading">
+                Chỉ từ
                 <br />
-                thời trang
-                <br />
-                <span>đơn giản hơn</span>
-                <br />
-                với Poso.
+                <span>5.000đ</span> <small>/ ngày</small>
               </h2>
               <p className="ads-hero-description">
                 Bán hàng, quản lý size – màu – SKU, tồn kho và doanh thu trên một nền tảng duy nhất.
@@ -259,22 +255,9 @@ function AdsLanding() {
           </div>
         </section>
         <section aria-labelledby="contact-title" className="ads-contact-section ads-container">
-          <div className="ads-contact-copy">
-            <p className="ads-section-label">POSO ĐỒNG HÀNH CÙNG SHOP</p>
-            <h2 id="contact-title">
-              Để lại thông tin.
-              <br />
-              <span>Poso liên hệ với bạn.</span>
-            </h2>
-            <p>
-              Chia sẻ nhu cầu của shop, đội ngũ Poso sẽ tư vấn và hướng dẫn bạn bắt đầu dùng thử.
-            </p>
-            <a href="tel:0977140536" className="ads-contact-hotline">
-              Hotline: 0977 140 536
-            </a>
-          </div>
+          <h2 id="contact-title">Để lại thông tin</h2>
           <div className="ads-contact-form">
-            <TrialSignupForm inline />
+            <TrialSignupForm inline minimal />
           </div>
         </section>
       </main>
