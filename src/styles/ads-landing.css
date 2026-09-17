@@ -27,7 +27,8 @@
   width: min(1280px, calc(100% - 96px));
   margin-inline: auto;
 }
-.ads-header {
+/* Use site names: EasyList hides the generic ads-header and ads-footer classes. */
+.poso-site-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -51,7 +52,7 @@
   font-weight: 600;
 }
 .ads-login:hover,
-.ads-footer a:hover {
+.poso-site-footer a:hover {
   color: var(--ads-orange);
 }
 .ads-landing :is(a, button):focus-visible {
@@ -210,7 +211,7 @@
   margin-top: 14px;
   color: oklch(0.76 0.008 65);
 }
-.ads-footer {
+.poso-site-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -220,22 +221,22 @@
   color: var(--ads-photo-muted);
   font-size: 10px;
 }
-.ads-footer-brand {
+.poso-site-footer-brand {
   font-size: 13px;
   font-weight: 700;
   color: var(--ads-on-photo);
 }
-.ads-footer-brand > span {
+.poso-site-footer-brand > span {
   font-weight: 400;
   font-size: 11px;
   color: var(--ads-photo-muted);
 }
-.ads-footer nav {
+.poso-site-footer nav {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
 }
-.ads-footer a {
+.poso-site-footer a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -745,15 +746,15 @@
   .ads-final-copy h2 {
     font-size: 30px;
   }
-  .ads-footer {
+  .poso-site-footer {
     flex-wrap: wrap;
     gap: 0 20px;
   }
-  .ads-footer-brand {
+  .poso-site-footer-brand {
     flex-basis: 100%;
     margin-bottom: 6px;
   }
-  .ads-footer > p:last-child {
+  .poso-site-footer > p:last-child {
     margin-left: auto;
   }
 }
@@ -761,7 +762,7 @@
   .ads-container {
     width: calc(100% - 40px);
   }
-  .ads-header {
+  .poso-site-header {
     height: 76px;
   }
   .ads-logo {
@@ -837,11 +838,11 @@
   .ads-final-action > p {
     font-size: 9px;
   }
-  .ads-footer {
+  .poso-site-footer {
     padding-block: 19px 24px;
     font-size: 9px;
   }
-  .ads-footer nav {
+  .poso-site-footer nav {
     gap: 17px;
   }
 }
@@ -856,7 +857,7 @@
   .ads-eyebrow {
     font-size: 9px;
   }
-  .ads-footer > p:last-child {
+  .poso-site-footer > p:last-child {
     margin: 0;
     flex-basis: 100%;
   }
@@ -1200,12 +1201,12 @@
 .ads-contact-form .signup-form-inline .signup-submit {
   justify-content: center;
 }
-.ads-footer-brand {
+.poso-site-footer-brand {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.ads-footer {
+.poso-site-footer {
   padding-bottom: 100px;
 }
 .poso-floating-contact {
@@ -1305,7 +1306,7 @@
     padding: 24px 18px;
     border-radius: 19px;
   }
-  .ads-footer {
+  .poso-site-footer {
     padding-bottom: 100px;
   }
   .poso-floating-contact {

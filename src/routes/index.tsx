@@ -83,7 +83,7 @@ function AdsLanding() {
       <a href="#noi-dung" className="ads-skip-link">
         Đến nội dung chính
       </a>
-      <header className="ads-container ads-header">
+      <header className="ads-container poso-site-header">
         <a href="/" aria-label="Poso — Bán hàng tinh gọn" className="ads-logo">
           <PosoLogo />
         </a>
@@ -262,8 +262,8 @@ function AdsLanding() {
         </section>
       </main>
 
-      <footer className="ads-container ads-footer">
-        <p className="ads-footer-brand">
+      <footer className="ads-container poso-site-footer">
+        <p className="poso-site-footer-brand">
           <PosoLogo className="w-20" /> <span>— Bán hàng tinh gọn</span>
         </p>
         <nav aria-label="Thông tin Poso">
