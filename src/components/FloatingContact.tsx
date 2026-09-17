@@ -1,30 +1,29 @@
-import { MessageCircle, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
 
-// TODO: thay bằng link Zalo OA và số điện thoại thật của POSO
-const ZALO_OA_URL = "https://zalo.me/poso";
-const PHONE_NUMBER = "0900000000";
+// Contact destinations published on the official Poso website.
+const ZALO_OA_URL = "https://zalo.me/1195309796934215464";
+const PHONE_NUMBER = "0977140536";
 
 export function FloatingContact() {
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-3 sm:bottom-6 sm:right-6">
+    <nav aria-label="Liên hệ Poso" className="poso-floating-contact">
       <a
         href={ZALO_OA_URL}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat qua Zalo OA"
-        className="flex h-13 w-13 items-center justify-center rounded-full bg-[#0068ff] text-white shadow-lg shadow-black/20 transition-transform hover:scale-110 sm:h-14 sm:w-14"
+        aria-label="Chat với Poso qua Zalo"
+        className="poso-contact-zalo"
       >
-        <MessageCircle className="h-6 w-6" />
-        <span className="sr-only">Zalo OA</span>
+        <img src="/logo-zalo.webp" alt="Zalo" width={1200} height={420} />
       </a>
       <a
         href={`tel:${PHONE_NUMBER}`}
-        aria-label="Gọi điện cho POSO"
-        className="relative flex h-13 w-13 items-center justify-center rounded-full bg-poso text-poso-foreground shadow-lg shadow-black/20 transition-transform hover:scale-110 sm:h-14 sm:w-14"
+        aria-label="Gọi Poso: 0977 140 536"
+        className="poso-contact-phone"
       >
-        <span className="absolute inset-0 animate-ping rounded-full bg-poso/40" />
-        <Phone className="relative h-6 w-6" />
+        <Phone size={20} aria-hidden="true" />
+        <span>0977 140 536</span>
       </a>
-    </div>
+    </nav>
   );
 }

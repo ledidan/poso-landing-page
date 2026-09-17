@@ -1,3 +1,4 @@
+import { PosoLogo } from "@/components/PosoLogo";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { AlertTriangle, Check, PackageCheck, ScanLine } from "lucide-react";
@@ -71,16 +72,21 @@ export function ChaosToControl() {
         <span className="rounded-md border border-border bg-muted px-2 py-2 text-muted-foreground sm:px-4">
           1. Đang rối
         </span>
-        <span aria-hidden className="text-poso">→</span>
+        <span aria-hidden className="text-poso">
+          →
+        </span>
         <span className="rounded-md border border-poso/30 bg-poso/10 px-2 py-2 text-poso sm:px-4">
           2. POSO xếp
         </span>
-        <span aria-hidden className="text-poso">→</span>
-        <span className="rounded-md bg-poso px-2 py-2 text-poso-foreground sm:px-4">
-          3. Đã rõ
+        <span aria-hidden className="text-poso">
+          →
         </span>
+        <span className="rounded-md bg-poso px-2 py-2 text-poso-foreground sm:px-4">3. Đã rõ</span>
       </div>
-      <div ref={ref} className="relative mx-auto flex h-[38rem] max-w-xl items-center justify-center sm:h-[42rem]">
+      <div
+        ref={ref}
+        className="relative mx-auto flex h-[38rem] max-w-xl items-center justify-center sm:h-[42rem]"
+      >
         <div className="absolute inset-0 flex items-center justify-center">
           {chips.map((chip, index) => (
             <Chip key={chip.label} {...chip} progress={scrollYProgress} index={index} />
@@ -94,24 +100,37 @@ export function ChaosToControl() {
           <div className="flex items-center justify-between border-b border-border px-4 py-4 sm:px-6">
             <div>
               <div className="flex items-center gap-2">
-                <span className="flex h-7 w-7 items-center justify-center rounded-md bg-poso text-xs font-bold text-poso-foreground">P</span>
-                <span className="text-xs font-bold text-poso">POSO ĐÃ SẮP XẾP</span>
+                <PosoLogo className="w-16" />
+                <span className="text-xs font-bold text-poso">ĐÃ SẮP XẾP</span>
               </div>
-              <h3 className="mt-3 text-lg font-extrabold text-foreground sm:text-xl">Áo thun cotton basic</h3>
-              <p className="mt-1 text-sm text-muted-foreground">1 sản phẩm · 2 màu · 3 size · 6 SKU</p>
+              <h3 className="mt-3 text-lg font-extrabold text-foreground sm:text-xl">
+                Áo thun cotton basic
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                1 sản phẩm · 2 màu · 3 size · 6 SKU
+              </p>
             </div>
             <PackageCheck className="h-7 w-7 shrink-0 text-poso" aria-hidden />
           </div>
 
           <div className="px-3 py-4 sm:px-6 sm:py-5">
             <div className="grid grid-cols-[5.25rem_repeat(3,1fr)] gap-1.5 text-center text-xs sm:grid-cols-[7rem_repeat(3,1fr)] sm:gap-2">
-              <div className="flex items-center text-left font-semibold text-muted-foreground">Màu / Size</div>
-              {['S', 'M', 'L'].map((size) => (
-                <div key={size} className="rounded-md bg-muted py-2 font-extrabold text-foreground">{size}</div>
+              <div className="flex items-center text-left font-semibold text-muted-foreground">
+                Màu / Size
+              </div>
+              {["S", "M", "L"].map((size) => (
+                <div key={size} className="rounded-md bg-muted py-2 font-extrabold text-foreground">
+                  {size}
+                </div>
               ))}
               {variants.flatMap((variant) => [
-                <div key={`${variant.color}-label`} className="flex items-center gap-2 rounded-md border border-border px-2 py-3 text-left font-bold text-foreground">
-                  <span className={`h-3 w-3 shrink-0 rounded-full border border-border ${variant.tone}`} />
+                <div
+                  key={`${variant.color}-label`}
+                  className="flex items-center gap-2 rounded-md border border-border px-2 py-3 text-left font-bold text-foreground"
+                >
+                  <span
+                    className={`h-3 w-3 shrink-0 rounded-full border border-border ${variant.tone}`}
+                  />
                   {variant.color}
                 </div>,
                 ...variant.sizes.map((stock, index) => (
@@ -119,14 +138,16 @@ export function ChaosToControl() {
                     key={`${variant.color}-${index}`}
                     className={`flex min-h-14 flex-col items-center justify-center rounded-md border font-extrabold ${
                       stock === 0
-                        ? 'border-border bg-muted text-muted-foreground'
+                        ? "border-border bg-muted text-muted-foreground"
                         : stock <= 3
-                          ? 'border-destructive/30 bg-destructive/10 text-destructive'
-                          : 'border-poso/25 bg-poso/10 text-foreground'
+                          ? "border-destructive/30 bg-destructive/10 text-destructive"
+                          : "border-poso/25 bg-poso/10 text-foreground"
                     }`}
                   >
                     <span className="text-base sm:text-lg">{stock}</span>
-                    <span className="text-[9px] font-semibold">{stock === 0 ? 'Hết' : stock <= 3 ? 'Sắp hết' : 'Còn'}</span>
+                    <span className="text-[9px] font-semibold">
+                      {stock === 0 ? "Hết" : stock <= 3 ? "Sắp hết" : "Còn"}
+                    </span>
                   </div>
                 )),
               ])}
@@ -135,7 +156,9 @@ export function ChaosToControl() {
               <div className="rounded-md border-2 border-poso bg-poso/5 p-3">
                 <p className="text-[10px] font-bold uppercase text-poso">Đang chọn</p>
                 <p className="mt-1 text-sm font-extrabold text-foreground">Đen · Size M</p>
-                <p className="mt-1 font-mono text-xs font-semibold text-muted-foreground">SKU: TS-BLK-M</p>
+                <p className="mt-1 font-mono text-xs font-semibold text-muted-foreground">
+                  SKU: TS-BLK-M
+                </p>
               </div>
               <div className="flex items-center justify-between rounded-md bg-foreground p-3 text-background">
                 <div>
@@ -160,7 +183,8 @@ export function ChaosToControl() {
         </motion.div>
       </div>
       <p className="mx-auto -mt-6 max-w-lg text-center text-sm leading-relaxed text-muted-foreground sm:text-base">
-        Chọn đúng <strong className="text-foreground">màu + size</strong>, POSO tự tìm đúng mã SKU và số lượng còn lại.
+        Chọn đúng <strong className="text-foreground">màu + size</strong>, POSO tự tìm đúng mã SKU
+        và số lượng còn lại.
       </p>
     </div>
   );

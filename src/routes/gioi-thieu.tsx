@@ -1,3 +1,4 @@
+import { PosoLogo } from "@/components/PosoLogo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
@@ -107,10 +108,7 @@ function GioiThieu() {
     <main className="bg-background">
       <nav className="absolute inset-x-0 top-0 z-50 flex items-center justify-between px-5 py-4 sm:px-8">
         <Link to="/" className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-poso text-xs font-bold text-poso-foreground">
-            P
-          </span>
-          <span className="text-sm font-bold tracking-tight text-white">POSO</span>
+          <PosoLogo />
         </Link>
         <a
           href="https://poso.vn"
@@ -149,9 +147,8 @@ function GioiThieu() {
             transition={{ duration: 0.9, delay: 0.3, ease }}
             className="mt-7 max-w-xl text-base leading-relaxed text-white/65 sm:text-lg"
           >
-            Đây là cách POSO xử lý phần khó nhất của ngành thời trang: một mẫu áo
-            có nhiều màu, mỗi màu nhiều size, mỗi size một tồn kho riêng. Xem từng
-            bước bên dưới.
+            Đây là cách POSO xử lý phần khó nhất của ngành thời trang: một mẫu áo có nhiều màu, mỗi
+            màu nhiều size, mỗi size một tồn kho riêng. Xem từng bước bên dưới.
           </motion.p>
         </div>
       </section>
@@ -169,15 +166,11 @@ function GioiThieu() {
               className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16"
             >
               <div className={i % 2 === 1 ? "lg:order-2" : undefined}>
-                <span className="text-sm font-bold tracking-[0.2em] text-poso">
-                  {step.no}
-                </span>
+                <span className="text-sm font-bold tracking-[0.2em] text-poso">{step.no}</span>
                 <h2 className="mt-4 text-[clamp(1.75rem,5.5vw,3rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-foreground">
                   {step.title}
                 </h2>
-                <p className="mt-4 text-lg font-medium text-foreground/80">
-                  {step.lead}
-                </p>
+                <p className="mt-4 text-lg font-medium text-foreground/80">{step.lead}</p>
                 {step.body.map((p) => (
                   <p
                     key={p.slice(0, 24)}

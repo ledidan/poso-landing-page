@@ -1,3 +1,4 @@
+import { PosoLogo } from "@/components/PosoLogo";
 import { motion } from "motion/react";
 import { Check, ShoppingBag } from "lucide-react";
 import imgTee from "@/assets/product-ao-thun.jpg";
@@ -5,9 +6,33 @@ import imgShirt from "@/assets/product-so-mi.jpg";
 import imgJeans from "@/assets/product-jeans.jpg";
 
 const lines = [
-  { name: "Áo thun cotton", color: "Đen", size: "M", sku: "TS-BLK-M", price: "249.000", qty: 2, image: imgTee },
-  { name: "Sơ mi linen", color: "Trắng", size: "L", sku: "SM-WHT-L", price: "459.000", qty: 1, image: imgShirt },
-  { name: "Quần jeans slim", color: "Xanh", size: "30", sku: "JN-BLU-30", price: "690.000", qty: 1, image: imgJeans },
+  {
+    name: "Áo thun cotton",
+    color: "Đen",
+    size: "M",
+    sku: "TS-BLK-M",
+    price: "249.000",
+    qty: 2,
+    image: imgTee,
+  },
+  {
+    name: "Sơ mi linen",
+    color: "Trắng",
+    size: "L",
+    sku: "SM-WHT-L",
+    price: "459.000",
+    qty: 1,
+    image: imgShirt,
+  },
+  {
+    name: "Quần jeans slim",
+    color: "Xanh",
+    size: "30",
+    sku: "JN-BLU-30",
+    price: "690.000",
+    qty: 1,
+    image: imgJeans,
+  },
 ];
 
 export function PosoTerminal() {
@@ -22,10 +47,8 @@ export function PosoTerminal() {
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-poso text-[11px] font-bold text-poso-foreground">
-              P
-            </div>
-            <span className="text-xs font-semibold tracking-wide text-white/70">POSO · Bán hàng</span>
+            <PosoLogo className="w-16" />
+            <span className="text-xs font-semibold tracking-wide text-white/70">Bán hàng</span>
           </div>
           <span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-medium text-white/60">
             Ca sáng
@@ -88,11 +111,11 @@ export function PosoTerminal() {
       {/* Floating variant chip */}
       <motion.div
         initial={{ opacity: 0, y: 12, scale: 0.9 }}
-        animate={{ opacity: 1, y: [0, -8, 0], scale: 1 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{
           opacity: { duration: 0.6, delay: 1.5 },
           scale: { duration: 0.6, delay: 1.5 },
-          y: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.5 },
+          y: { duration: 0.6, ease: "easeInOut", delay: 1.5 },
         }}
         className="absolute -left-4 top-24 hidden rounded-2xl border border-white/10 bg-[oklch(0.16_0.02_60)]/90 px-3 py-2 shadow-xl backdrop-blur-xl sm:block"
       >
@@ -105,12 +128,12 @@ export function PosoTerminal() {
       {/* Handheld device */}
       <motion.div
         initial={{ opacity: 0, y: 24, rotate: -6 }}
-        animate={{ opacity: 1, y: [0, -10, 0], rotate: -6 }}
+        animate={{ opacity: 1, y: 0, rotate: -6 }}
         transition={{
           opacity: { duration: 0.7, delay: 1.1 },
-          y: { duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.1 },
+          y: { duration: 0.7, ease: "easeInOut", delay: 1.1 },
         }}
-        className="absolute -bottom-24 -right-2 w-28 overflow-hidden rounded-[1.25rem] border border-white/10 bg-[oklch(0.16_0.02_60)]/95 p-2.5 shadow-2xl backdrop-blur-xl sm:-bottom-20 sm:-right-10 sm:w-36"
+        className="absolute -bottom-24 -right-2 w-28 overflow-hidden rounded-[1.25rem] border border-white/10 bg-[oklch(0.16_0.02_60)]/95 p-2.5 shadow-2xl backdrop-blur-xl sm:-bottom-20 lg:-right-10 sm:w-36"
       >
         <p className="text-[9px] uppercase tracking-wider text-white/40">Máy cầm tay</p>
         <p className="mt-1 text-[11px] font-semibold text-white">Quét mã SKU</p>
